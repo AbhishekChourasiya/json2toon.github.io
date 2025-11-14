@@ -1,50 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import { jsonToToon } from "@/utils/toonConverter";
 
 interface ConverterProps {
   onConvert: (json: string, toon: string) => void;
+  exampleJson?: string;
 }
 
-export const Converter = ({ onConvert }: ConverterProps) => {
+export const Converter = ({ onConvert, exampleJson }: ConverterProps) => {
   const [jsonInput, setJsonInput] = useState("");
   const [toonOutput, setToonOutput] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const jsonToToon = (json: string): string => {
-    try {
-      const obj = JSON.parse(json);
-      return objectToToon(obj);
-    } catch (error) {
-      throw new Error("Invalid JSON");
+  // Auto-load example JSON when provided
+  useEffect(() => {
+    if (exampleJson) {
+      setJsonInput(exampleJson);
     }
-  };
-
-  const objectToToon = (obj: any, indent = 0): string => {
-    const spaces = "  ".repeat(indent);
-    
-    if (Array.isArray(obj)) {
-      if (obj.length === 0) return "[]";
-      const items = obj.map(item => objectToToon(item, indent + 1)).join("\n");
-      return `[\n${items}\n${spaces}]`;
-    }
-    
-    if (obj === null) return "null";
-    if (typeof obj !== "object") return JSON.stringify(obj);
-    
-    const entries = Object.entries(obj);
-    if (entries.length === 0) return "{}";
-    
-    const lines = entries.map(([key, value]) => {
-      const valueStr = objectToToon(value, indent + 1);
-      return `${spaces}  ${key}: ${valueStr}`;
-    });
-    
-    return `{\n${lines.join("\n")}\n${spaces}}`;
-  };
+  }, [exampleJson]);
 
   const handleConvert = () => {
     try {
