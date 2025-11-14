@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 const Index = () => {
   const [jsonInput, setJsonInput] = useState("");
   const [toonOutput, setToonOutput] = useState("");
+  const [selectedExample, setSelectedExample] = useState<string>("");
 
   // Simple token estimation (approximation: ~4 chars per token)
   const estimateTokens = (text: string): number => {
@@ -21,6 +22,10 @@ const Index = () => {
   const handleConvert = (json: string, toon: string) => {
     setJsonInput(json);
     setToonOutput(toon);
+  };
+
+  const handleSelectExample = (json: string) => {
+    setSelectedExample(json);
   };
 
   return (
@@ -75,17 +80,11 @@ const Index = () => {
             <h3 className="text-xl font-semibold text-foreground mb-2">Try Examples</h3>
             <p className="text-muted-foreground">Quick-start with pre-built examples</p>
           </div>
-          <ExampleButtons onSelectExample={(json) => {
-            const input = document.querySelector('textarea') as HTMLTextAreaElement;
-            if (input) {
-              input.value = json;
-              input.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-          }} />
+          <ExampleButtons onSelectExample={handleSelectExample} />
         </section>
 
         {/* Converter */}
-        <Converter onConvert={handleConvert} />
+        <Converter onConvert={handleConvert} exampleJson={selectedExample} />
 
         {/* Token Comparison */}
         {jsonTokens > 0 && toonTokens > 0 && (
