@@ -47,13 +47,7 @@ const Index = () => {
               <Button variant="outline" size="sm" asChild>
                 <a href="https://github.com/toon-format/toon" target="_blank" rel="noopener noreferrer" className="gap-2">
                   <Github className="h-4 w-4" />
-                  GitHub
-                </a>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <a href="https://www.freecodecamp.org/news/what-is-toon-how-token-oriented-object-notation-could-change-how-ai-sees-data/" target="_blank" rel="noopener noreferrer" className="gap-2">
-                  <ExternalLink className="h-4 w-4" />
-                  Learn More
+                  Official Toon GitHub
                 </a>
               </Button>
             </div>
@@ -110,12 +104,12 @@ const Index = () => {
           <p className="mt-2">
             Learn more about TOON at{" "}
             <a 
-              href="https://www.freecodecamp.org/news/what-is-toon-how-token-oriented-object-notation-could-change-how-ai-sees-data/"
+              href="https://github.com/toon-format/toon"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
-              FreeCodeCamp
+              github
             </a>
           </p>
         </div>
